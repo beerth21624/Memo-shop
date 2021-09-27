@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <Grid container md={12} spacing={2}>
       <Grid item md={6}>
-        <Link to="/product/tent" className="link">
+        <Link to="/shop/tent" className="link">
           <Card className={classes.card1}>
             <CardActionArea className={classes.paper}>
               <Typography className={classes.title}>เต้นท์</Typography>
@@ -73,7 +73,7 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid item md={6}>
-        <Link to="/product/acsessory" className="link">
+        <Link to="/shop/acsessory" className="link">
           <Card className={classes.card2}>
             <CardActionArea className={classes.paper}>
               <Typography className={classes.title}>
@@ -84,7 +84,7 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid item md={6}>
-        <Link to="/product/cooking" className="link">
+        <Link to="/shop/cooking" className="link">
           <Card className={classes.card3}>
             <CardActionArea className={classes.paper}>
               <Typography className={classes.title}>อุปกรณ์ทำอาหาร</Typography>
@@ -93,7 +93,7 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid item md={6}>
-        <Link to="/product/costume" className="link">
+        <Link to="/shop/costume" className="link">
           <Card className={classes.card4}>
             <CardActionArea className={classes.paper}>
               <Typography className={classes.title}>เครื่องแต่งกาย</Typography>

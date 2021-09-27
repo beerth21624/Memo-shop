@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRouter = require('./routers/auth');
 const productRouter = require('./routers/product');
+const cartRouter = require('./routers/cart');
+const orderRouter = require('./routers/order');
 
 dotenv.config();
 app.use(express.json());
@@ -21,6 +23,8 @@ mongoose
 
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/order', orderRouter);
 
 app.listen(5000, () => {
   console.log('backend start');

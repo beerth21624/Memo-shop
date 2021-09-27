@@ -7,7 +7,7 @@ import { Paper } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import CardProductCart from './cardProductCart';
+import CardProductCart from '../components/cardProductCart';
 
 const useStyles = makeStyles({
   root: {

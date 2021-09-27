@@ -1,14 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Paper } from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const useStyles = makeStyles({
   root: {
@@ -54,16 +53,24 @@ const CardProductCart = () => {
         className={classes.boxDesc}
       >
         <Typography variant="h6">DOD ONE POLE TENT Tan (S) 3P</Typography>
-        <Box display="flex" flexDirection="row" margin="20px 0px">
-          <Button variant="contained" className={classes.countIcon}>
-            <RemoveIcon />
-          </Button>
-          <Paper className={classes.countIcon}>
-            <Typography>1</Typography>
-          </Paper>
-          <Button variant="contained" className={classes.countIcon}>
-            <AddIcon />
-          </Button>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="baseline"
+        >
+          <Box display="flex" flexDirection="row" margin="20px 0px">
+            <Button variant="contained" className={classes.countIcon}>
+              <RemoveIcon />
+            </Button>
+            <Paper className={classes.countIcon}>
+              <Typography>1</Typography>
+            </Paper>
+            <Button variant="contained" className={classes.countIcon}>
+              <AddIcon />
+            </Button>
+          </Box>
+          <DeleteOutlineIcon />
         </Box>
         <Typography variant="h6">
           ฿<span>4500</span>
