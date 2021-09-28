@@ -6,6 +6,7 @@ const authRouter = require('./routers/auth');
 const productRouter = require('./routers/product');
 const cartRouter = require('./routers/cart');
 const orderRouter = require('./routers/order');
+const userRouter = require('./routers/user');
 
 dotenv.config();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/user', userRouter);
 
 app.listen(5000, () => {
   console.log('backend start');
