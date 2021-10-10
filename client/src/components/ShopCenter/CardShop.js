@@ -5,42 +5,41 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   rootCard: {
-    maxWidth: 455,
+    width: 305,
     textAlign: 'center',
     boxShadow: 'none',
   },
   media: {
-    height: 340,
+    height: 300,
   },
 });
 
-const CardShop = () => {
+const CardShop = ({ product }) => {
   const classes = useStyles();
-  const location = useLocation();
-  const path = location.pathname.split('/')[2];
+  const { name, image, price, _id } = product;
   return (
-    <Card className={classes.rootCard}>
-      <Link to={`/product/${path}`} className="link">
+    <Link to={`/product/${_id}`} className="link">
+      <Card className={classes.rootCard}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://static.wixstatic.com/media/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.jpg/v1/fill/w_306,h_306,al_c,q_80,usm_0.66_1.00_0.01/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.webp"
+            image={image}
             title="Contemplative Reptile"
           />
           <CardContent>
             <Typography gutterBottom variant="subtitle1" component="h2">
-              DOD ONE POLE TENT Tan (S) 3P
+              {name}
             </Typography>
             <Typography gutterBottom variant="caption" component="h2">
-              ฿<span>4500</span>
+              ฿<span>{price}</span>
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 

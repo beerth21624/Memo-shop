@@ -35,8 +35,16 @@ exports.login = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: '5d' }
     );
+    const userNoPass = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      profilePic: user.profilePic,
+      isAdmin: user.isAdmin,
+    };
 
-    res.status(200).json({ sucess: true, token: accessToken, user: user });
+    console.log(userNoPass);
+    res.status(200).json({ token: accessToken, user: userNoPass });
   } catch (err) {
     res.status(500).json(err);
   }

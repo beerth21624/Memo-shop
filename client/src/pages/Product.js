@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createTheme,
   makeStyles,
@@ -12,8 +12,10 @@ import { Box } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { getProduct } from '../Redux/productRedux/productAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { createCart } from '../Redux/cartRedux/cartAction';
 
 const theme = createTheme({
   palette: {
@@ -69,33 +71,45 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     padding: '50px 100px',
     borderTop: '2px solid lightgray',
+    minWidth: '100%',
   },
 });
 
 const Product = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { singleProduct } = useSelector((state) => state.product);
+  const user = useSelector((state) => state.auth.user?._id);
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    dispatch(getProduct(id));
+  }, [dispatch, id]);
+
+  const { name, desc, image, price } = singleProduct;
+
+  const handleAddTocart = () => {
+    dispatch(createCart(user, singleProduct, token));
+  };
   return (
     <ThemeProvider theme={theme}>
-      <Grid md={12} className={classes.root}>
+      <Grid container className={classes.root}>
         <Navbar />
         <Container maxWidth="lg">
           <Paper className={classes.Paper}>
             <Grid container md={12}>
               <Grid item md={6} className={classes.rootImg}>
-                <img
-                  className={classes.img}
-                  src="https://static.wixstatic.com/media/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.jpg/v1/fill/w_551,h_551,al_c,q_85,usm_0.66_1.00_0.01/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.webp"
-                  alt=""
-                />
+                <img className={classes.img} src={image} alt="" />
               </Grid>
               <Grid item md={6}>
                 <Box className={classes.detail}>
                   <Box display="flex" flexDirection="column">
                     <Typography variant="h5" gutterBottom>
-                      DOD ONE POLE TENT Tan (S) 3P
+                      {name}
                     </Typography>
                     <Typography>
-                      ราคา <span>4500</span> บาท
+                      ราคา <span>{price}</span> บาท
                     </Typography>
                   </Box>
                   <Box
@@ -107,6 +121,7 @@ const Product = () => {
                       variant="contained"
                       color="primary"
                       className={classes.Button}
+                      onClick={handleAddTocart}
                     >
                       เพิ่มลงในรถเข็น
                     </Button>
@@ -119,13 +134,7 @@ const Product = () => {
                 <Typography variant="h5" gutterBottom>
                   รายละเอียดสินค้า
                 </Typography>
-                <Typography variant="body">
-                  เต็นท์ทรงกระโจม สำหรับ 3 คน เหมาะกับเดอะแก็งค์และครอบครัวเล็กๆ
-                  กางง่าย เก็บง่าย ทำความสะอาดง่าย เพราะเป็นเต็นท์แบบเสาเดียว
-                  สไตล์คูลๆ ตัวเต็นท์เคลือบกันแสงไว้ในตัวผ้า ทำให้แสง
-                  และความร้อนผ่านเข้ามาข้างในได้ยาก
-                  เหมาะกับการนอนหลับยาวๆในวันพักผ่อน
-                </Typography>
+                <Typography variant="body">{desc}</Typography>
               </Box>
             </Grid>
           </Paper>

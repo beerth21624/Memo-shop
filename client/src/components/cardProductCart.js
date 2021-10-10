@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Paper } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
+import { addProductCart } from '../Redux/cartRedux/cartAction';
+import { useDispatch } from 'react-redux';
 const useStyles = makeStyles({
   root: {
     width: '100%',
     height: '20vh',
     borderBottom: '2px solid lightgray',
+    gap: 20,
   },
   boxImg: {
     width: '30%',
@@ -35,16 +36,25 @@ const useStyles = makeStyles({
   },
 });
 
-const CardProductCart = () => {
+const CardProductCart = ({ product, user, token }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(product.quantity);
+
+  useEffect(() => {
+    dispatch(addProductCart(user, product, token, quantity));
+  }, [quantity, user, product, token, dispatch]);
+
+  const handleAddCart = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleRemoveCart = () => {
+    setQuantity(quantity - 1);
+  };
   return (
     <Box display="flex" flexDirection="row" className={classes.root}>
       <Box className={classes.boxImg}>
-        <img
-          className={classes.img}
-          src="https://static.wixstatic.com/media/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.jpg/v1/fill/w_551,h_551,al_c,q_85,usm_0.66_1.00_0.01/b3db52_95396623076b49dcb19b23c44b03d1df~mv2.webp"
-          alt=""
-        />
+        <img className={classes.img} src={product.productImage} alt="" />
       </Box>
       <Box
         display="flex"
@@ -52,7 +62,7 @@ const CardProductCart = () => {
         justifyContent="center"
         className={classes.boxDesc}
       >
-        <Typography variant="h6">DOD ONE POLE TENT Tan (S) 3P</Typography>
+        <Typography variant="h6">{product.productName}</Typography>
         <Box
           display="flex"
           flexDirection="row"
@@ -60,20 +70,28 @@ const CardProductCart = () => {
           alignItems="baseline"
         >
           <Box display="flex" flexDirection="row" margin="20px 0px">
-            <Button variant="contained" className={classes.countIcon}>
+            <Button
+              variant="contained"
+              className={classes.countIcon}
+              onClick={handleRemoveCart}
+            >
               <RemoveIcon />
             </Button>
             <Paper className={classes.countIcon}>
-              <Typography>1</Typography>
+              <Typography>{quantity}</Typography>
             </Paper>
-            <Button variant="contained" className={classes.countIcon}>
+            <Button
+              variant="contained"
+              className={classes.countIcon}
+              onClick={handleAddCart}
+            >
               <AddIcon />
             </Button>
           </Box>
           <DeleteOutlineIcon />
         </Box>
         <Typography variant="h6">
-          ฿<span>4500</span>
+          ฿<span>{product.productPrice}</span>
         </Typography>
       </Box>
     </Box>

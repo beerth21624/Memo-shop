@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   makeStyles,
   createTheme,
@@ -11,7 +12,7 @@ import { Paper } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
-import { LoginFetch } from '../Redux/authRedux/authService';
+import { LoginAction } from '../Redux/authRedux/authAction';
 
 const theme = createTheme({
   palette: {
@@ -60,18 +61,21 @@ const Login = () => {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    LoginFetch({
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    dispatch(
+      LoginAction({
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
+    );
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container md={12} className={classes.root}>
+      <Grid container className={classes.root}>
         <Navbar />
         <Box
           display="flex"

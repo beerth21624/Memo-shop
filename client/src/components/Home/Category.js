@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { Box } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+
 const useStyles = makeStyles({
   root: {
     zIndex: '99',
@@ -62,7 +62,7 @@ const useStyles = makeStyles({
 const Navbar = () => {
   const classes = useStyles();
   return (
-    <Grid container md={12} spacing={2}>
+    <Grid container spacing={2}>
       <Grid item md={6}>
         <Link to="/shop/tent" className="link">
           <Card className={classes.card1}>

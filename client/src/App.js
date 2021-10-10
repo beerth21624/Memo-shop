@@ -1,14 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ShopCenter from './pages/ShopCenter';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
+import Admin from './pages/Admin';
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from './Redux/ConfigureStore';
+
 function App() {
   return (
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <Route exact path="/">
         <Home />
       </Route>
@@ -27,7 +32,13 @@ function App() {
       <Route exact path="/cart">
         <Cart />
       </Route>
-    </BrowserRouter>
+      <Route exact path="/admin/:id">
+        <Admin />
+      </Route>
+      <Route exact path="/admin/update/:id">
+        <Admin />
+      </Route>
+    </ConnectedRouter>
   );
 }
 

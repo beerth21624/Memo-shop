@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Navbar from '../components/Home/Navbar';
 import { Grid } from '@material-ui/core';
@@ -8,6 +8,8 @@ import { Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import CardProductCart from '../components/cardProductCart';
+import { getCart } from '../Redux/cartRedux/cartAction';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -49,17 +51,42 @@ const useStyles = makeStyles({
 
 const Cart = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const cartProducts = useSelector((state) => state.cart.products);
+
+  const { token, user } = auth;
+  useEffect(() => {
+    dispatch(getCart(user, token));
+  }, [token, user, dispatch, cartProducts]);
+  function handlePrice() {
+    let allPrice = 0;
+    cartProducts.forEach((product) => {
+      const { productPrice, quantity } = product;
+      let priceAllForProduct = parseInt(productPrice * quantity);
+      allPrice = allPrice + priceAllForProduct;
+    });
+    return allPrice;
+  }
+
+  function handlePriceAndShipping() {
+    return handlePrice() + 45;
+  }
   return (
-    <Grid md={12} className={classes.root}>
+    <Grid className={classes.root}>
       <Navbar />
       <Container maxWidth="lg">
         <Paper className={classes.Paper}>
           <Box className={classes.BoxList}>
             <Typography variant="h4">รายการคำสั่งซื้อ</Typography>
-            <CardProductCart />
-            <CardProductCart />
-            <CardProductCart />
-            <CardProductCart />
+            {cartProducts.map((cart, index) => (
+              <CardProductCart
+                key={index}
+                product={cart}
+                user={user}
+                token={token}
+              />
+            ))}
           </Box>
           <Box className={classes.BoxOrder}>
             <Box className={classes.order}>
@@ -74,7 +101,7 @@ const Cart = () => {
               >
                 <Typography>ราคาสินค้า</Typography>
                 <Typography>
-                  <span>4500</span> บาท{' '}
+                  <span>{handlePrice()}</span> บาท{' '}
                 </Typography>
               </Box>
               <Box
@@ -107,7 +134,7 @@ const Cart = () => {
               >
                 <Typography variant="h5">รวม</Typography>
                 <Typography variant="h5">
-                  <span>4545</span> บาท{' '}
+                  <span>{handlePriceAndShipping()}</span> บาท{' '}
                 </Typography>
               </Box>
               <Button variant="contained">ชำระเงิน</Button>

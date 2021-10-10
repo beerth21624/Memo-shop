@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   makeStyles,
   createTheme,
@@ -9,12 +10,10 @@ import Navbar from '../components/Home/Navbar';
 import { Box } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
-import { RegisterFetch } from '../Redux/authRedux/authService';
+import { RegisterAction } from '../Redux/authRedux/authAction';
 
 const theme = createTheme({
   palette: {
@@ -64,19 +63,22 @@ const Register = () => {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    RegisterFetch({
-      username: usernameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    dispatch(
+      RegisterAction({
+        username: usernameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
+    );
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container md={12} className={classes.root}>
+      <Grid container className={classes.root}>
         <Navbar />
         <Box
           display="flex"

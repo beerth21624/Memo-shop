@@ -5,7 +5,6 @@ import HeaderShop from '../components/ShopCenter/HeaderShop';
 import Footer from '../components/Footer/Footer';
 import CategoryShop from '../components/ShopCenter/CategoryShop';
 import MainShop from '../components/ShopCenter/MainShop';
-
 import { Grid } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 
@@ -24,7 +23,7 @@ const ShopCenter = () => {
         <HeaderShop />
       </Grid>
       <Container maxWidth="lg" className={classes.root}>
-        <Grid container md={12} direction="row">
+        <Grid container direction="row">
           <Grid item md={2}>
             <CategoryShop />
           </Grid>
